@@ -1,7 +1,5 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import sys
-sys.path.append('D:\test\LookForCoupon')
 import dao.CouponDao
 import utils.httpUtil
 
