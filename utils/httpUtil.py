@@ -3,6 +3,7 @@
 #get接口调用
 import urllib
 import urllib2
+from flask import json
 
 
 
@@ -27,8 +28,12 @@ class httpUtil:
         res_data = urllib2.urlopen(req)
         res = res_data.read()
         print res
+        
     def paramToUrlParamStr(self,param):
-        return param
+        paramStr = ''
+        for key in param:
+            paramStr +=param[key] + "&"
+        return paramStr
 
     def StrToDict(self, str):
-        return str
+        return json.loads(str)
