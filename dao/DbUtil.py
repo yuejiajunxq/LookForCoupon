@@ -40,6 +40,7 @@ def getUnusedDb(db_list):
     return result
 
 def returnDB(key,db):
+    db.commit()
     db_pool[key].append(db)
 
 def getCursor(db):
