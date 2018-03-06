@@ -3,7 +3,6 @@
 import time
 import utils.redisUtil
 import utils.httpUtil
-import service.CouponService
 
 
 class ItemSearch:
@@ -21,14 +20,14 @@ class ItemSearch:
             time.sleep(1)
             # 先从队列取出itemid   查出访问需要的cookie，itemid，siteid，adzoneid
             item = self.getItemInRedisList()
+            print type(item)
+            if item == None :
+                continue
+            print item
             itemid = item["itemid"]
             cookie = item["cookie"]
             siteid = item["siteid"]
             adzoneid = item["adzoneid"]
-            print type(itemid)
-            if itemid == None :
-                continue
-            print itemid
             # 将返回信息的消息发布出去
             res = self.searchItem(itemid,siteid,adzoneid,cookie)
             self.setItemInfoInRedis(itemid,res)
@@ -37,13 +36,14 @@ class ItemSearch:
     def getItemInRedisList(self):
         r = utils.redisUtil.getRedis("xz", 0)
         itemInfo = r.lpop("items")
+        if itemInfo == None :
+            return None
         item_sp = itemInfo.split('!@#')
         itemid = item_sp[0]
         cookie = item_sp[1]
         siteid = item_sp[2]
         adzoneid = item_sp[3]
         item = {"itemid":itemid,"cookie":cookie,"siteid":siteid,"adzoneid":adzoneid}
-        print item
         return item
 
     def setItemInfoInRedis(self,itemid,res):
