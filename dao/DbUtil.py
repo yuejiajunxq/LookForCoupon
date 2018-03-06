@@ -6,6 +6,13 @@ import MySQLdb
 db_pool = {}
 max_db_con = 20
 db_info = {
+    'local': {
+        'host': "127.0.0.1",
+        'user': "root",
+        'password': "123456",
+        'db': "yezi",
+        'port': 3306
+    },
     'huihex':{
         'host':"118.178.249.206",
         'user':"huihex",

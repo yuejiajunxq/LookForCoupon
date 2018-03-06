@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 #get接口调用
 import urllib
+import urlparse
 import urllib2
 from flask import json
 
@@ -9,10 +10,12 @@ from flask import json
 
 class httpUtil:
     def get(self,url,param,cookie):
-        get_url = url + "?" + self.paramToUrlParamStr(param)
-        cookie_headers = cookie
+        print param
+        if len(param) != 0:
+            url = url + "?" + self.paramToUrlParamStr(param)
+        get_url = url
+        cookie_headers = {"cookie": cookie}
         print  get_url
-        print  cookie_headers
         req = urllib2.Request(url=get_url, headers=cookie_headers)
         res_data = urllib2.urlopen(req)
         res = res_data.read()
@@ -32,7 +35,7 @@ class httpUtil:
         args_data = param
         args_data_urlencode = urllib.urlencode(args_data)
         post_url = url
-        cookie_headers = cookie
+        cookie_headers = {"cookie":cookie}
         req = urllib2.Request(url=post_url, data=args_data_urlencode, headers=cookie_headers)
         res_data = urllib2.urlopen(req)
         res = res_data.read()
@@ -47,5 +50,8 @@ class httpUtil:
     def StrToDict(self, str):
         return json.loads(str)
 if __name__ == '__main__':
-    hu = httpUtil()
-    hu.gettest()
+    #hu = httpUtil()
+    #hu.gettest()
+    s = '%E5%B9%BF%E5%B7%9E'
+    s = urlparse.unquote(s)
+    print(s)
